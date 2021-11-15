@@ -27,7 +27,6 @@
     };
 
     var game = new Phaser.Game(config);
-
     function preload ()
     {
         this.load.image('sky', 'assets/BACKGROUND.png');
@@ -218,38 +217,44 @@
     }
     var enemyCanAttack = true
     var playerHurt = false
+    var playerOnAcid = true
     var playerFacing
     var animsEnabled = 1
     var canAttack = 1
     var dead = 1
 
     function update(){
+        //Left
         if (keyA.isDown || cursors.left.isDown)
         {
-            player.setVelocityX(-250);
+            if(enemyCanAttack){
+                player.setVelocityX(-250);
+            }
             if (animsEnabled && !playerHurt){
                 if (!!player.body.touching.down){
                     player.anims.play('mk_walk_left', true);
                 } else{
                     player.anims.play('mk_jump_left')
                 }
+            }else if(playerHurt) {
+                player.anims.play('mk_hurt_left')
             }else{
                 if (!!player.body.touching.down){
                     player.anims.play('mk_walk_axe_left', true);
                 } else{
                     player.anims.play('mk_jump_axe_left')
                 }
-                if(playerHurt) {
-                    player.anims.play('mk_hurt_left')
-
-                }
+                
             }
             playerFacing = 0
         }
-            
+        //right
         else if (keyD.isDown || cursors.right.isDown)
         {
-            player.setVelocityX(250);
+            if(enemyCanAttack){
+                player.setVelocityX(250);
+            }
+            
 
             if (animsEnabled && !playerHurt){
                 if (!!player.body.touching.down){
@@ -257,21 +262,32 @@
                 } else{
                     player.anims.play('mk_jump_right')
                 }
+            }else if(playerHurt){
+                player.anims.play('mk_hurt_right')
             }else{
                 if (!!player.body.touching.down && !playerHurt){
                     player.anims.play('mk_walk_axe_right', true);
                 } else if(!playerHurt){
                     player.anims.play('mk_jump_axe_right')
                 }
-                if(playerHurt) {
-                    player.anims.play('mk_hurt_right')
-                }
-
             }
             playerFacing = 1
         }
         else{
-            player.setVelocityX(0);
+            if(enemyCanAttack){
+                player.setVelocityX(0);
+            }
+            if(playerHurt){
+                if(playerFacing){
+                    player.anims.play('mk_hurt_right')
+                }
+                else{
+                    player.anims.play('mk_hurt_left')
+                }
+            }else{
+                
+            }
+            
         }
         //Jump
         if ((keyW.isDown || cursors.up.isDown || keySpace.isDown) && player.body.touching.down)
@@ -284,7 +300,7 @@
                 animsEnabled = 0
                 if(playerFacing){
                     player.anims.play('mk_attack_right', false)
-                    if ((enemy.x-player.x)>=60 && (enemy.x-player.x)<=160){
+                    if ((enemy.x-player.x)>=60 && (enemy.x-player.x)<=200){
                         if ((enemy.y-player.y)>=-160 && (enemy.y-player.y)<=160){
                             enemyHP -= 50
                             particles.emitParticleAt(enemy.x,enemy.y)
@@ -299,7 +315,7 @@
                     }
                 } else{
                     player.anims.play('mk_attack_left', false)
-                    if ((enemy.x-player.x)<=-60 && (enemy.x-player.x)>=-160){
+                    if ((enemy.x-player.x)<=-60 && (enemy.x-player.x)>=-200){
                         if ((enemy.y-player.y)>=-160 && (enemy.y-player.y)<=160){
                             enemyHP -= 50
                             particles.emitParticleAt(enemy.x,enemy.y)
@@ -341,10 +357,10 @@
             enemy.setVelocityX(0)
             enemy.setVelocityY(280)
         }
-        if (playerHurt){
-            player.anims.play('mk')
+        if(enemyCanAttack){
+            playerHurt = false
+            player.setTint(0xffffff);
         }
-        playerHurt = false
     }
     function onEvent(){
         canAttack = 1
@@ -366,7 +382,7 @@
         console.log(playerHP)
         player.setVisible(true)
         playerHurt = true
-        
+        playerOnAcid = true
     }
     function doTheAnim(){
         this.scene.pause()
@@ -375,19 +391,26 @@
         enemyCanAttack = true
     }
     function enemyAttack(){
-            enemyCanAttack = false
+            
             if(enemyCanAttack){
-                playerHP -=20
+                playerHP -=10
+                particles.emitParticleAt(player.x,player.y)
+                particles.emitParticleAt(player.x,player.y)
+                particles.emitParticleAt(player.x,player.y)
+                particles.emitParticleAt(player.x,player.y)
+                player.setTint(0xff1111);
+
                 if(playerFacing){
                     player.setVelocityX(-340)
                     player.x -= 60
                 }else{
                     player.setVelocityX(340)
-                    player.x -= 60
+                    player.x -= 10
                 }
             }
+            enemyCanAttack = false
             playerHurt = true
-            cooldown = this.time.delayedCall(3200, afterCooldown, [], this)
+            cooldown = this.time.delayedCall(200, afterCooldown, [], this)
     }
     </script>
 
