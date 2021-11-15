@@ -42,7 +42,7 @@
 
     var platforms
     var playerHP = 100
-    
+    var enemyHurt = false
     function create ()
     {
         this.add.image(600, 450, 'sky');
@@ -294,7 +294,7 @@
         {
             player.setVelocityY(-750);
         } 
-        if(this.input.keyboard.checkDown(keyE, 400)||this.input.keyboard.checkDown(keyQ, 400)||this.input.keyboard.checkDown(keyC, 400)){
+        if(this.input.keyboard.checkDown(keyE, 600)||this.input.keyboard.checkDown(keyQ, 600)||this.input.keyboard.checkDown(keyC, 600)){
             if (canAttack){
                 canAttack = 0
                 animsEnabled = 0
@@ -310,6 +310,7 @@
                             particles.emitParticleAt(enemy.x,enemy.y)
                             particles.emitParticleAt(enemy.x,enemy.y)
                             enemy.setVelocityX(340)
+                            enemyHurt = true
                         }
 
                     }
@@ -325,6 +326,7 @@
                             particles.emitParticleAt(enemy.x,enemy.y)
                             particles.emitParticleAt(enemy.x,enemy.y)
                             enemy.setVelocityX(-340)
+                            enemyHurt = true
                         }
                     }
                 }
@@ -361,6 +363,12 @@
             playerHurt = false
             player.setTint(0xffffff);
         }
+        if(enemyHurt){
+            enemy.setTint(0xffffff);
+            
+        }else{
+            enemy.setTint(0x000000);
+        }
     }
     function onEvent(){
         canAttack = 1
@@ -370,6 +378,7 @@
         }else{
             player.anims.play('mk_jump_left')
         }
+        enemyHurt = false
         
     }
 
