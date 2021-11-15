@@ -294,7 +294,7 @@
         {
             player.setVelocityY(-750);
         } 
-        if(this.input.keyboard.checkDown(keyE, 600)||this.input.keyboard.checkDown(keyQ, 600)||this.input.keyboard.checkDown(keyC, 600)){
+        if(this.input.keyboard.checkDown(keyE, 800)||this.input.keyboard.checkDown(keyQ, 800)||this.input.keyboard.checkDown(keyC, 800)){
             if (canAttack){
                 canAttack = 0
                 animsEnabled = 0
@@ -364,10 +364,10 @@
             player.setTint(0xffffff);
         }
         if(enemyHurt){
-            enemy.setTint(0xffffff);
+            enemy.setTint(0xff0000);
             
         }else{
-            enemy.setTint(0x000000);
+            enemy.setTint(0xffffff);
         }
     }
     function onEvent(){
