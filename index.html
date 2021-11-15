@@ -29,15 +29,15 @@
     var game = new Phaser.Game(config);
     function preload ()
     {
-        this.load.image('sky', 'assets/BACKGROUND.png');
-        this.load.spritesheet('mk', 'assets/masked_killer.png', { frameWidth: 320, frameHeight: 184 });
-        this.load.image('platform', 'assets/platform.png');
-        this.load.image('gui', 'assets/gui.png');
-        this.load.image('healthbar', 'assets/health_bar.png');
-        this.load.image('controls', 'assets/controls.png');
-        this.load.image('blood', 'assets/blood_particle.png');
-        this.load.spritesheet('dead','assets/death_sprites.png', { frameWidth:100,frameheight:100});
-        this.load.spritesheet('paperhands','assets/paperhands.png', { frameWidth:184,frameheight:184});
+        this.load.image('sky', '/assets/BACKGROUND.png');
+        this.load.spritesheet('mk', '/assets/masked_killer.png', { frameWidth: 320, frameHeight: 184 });
+        this.load.image('platform', '/assets/platform.png');
+        this.load.image('gui', '/assets/gui.png');
+        this.load.image('healthbar', '/assets/health_bar.png');
+        this.load.image('controls', '/assets/controls.png');
+        this.load.image('blood', '/assets/blood_particle.png');
+        this.load.spritesheet('dead','/assets/death_sprites.png', { frameWidth:100,frameheight:100});
+        this.load.spritesheet('paperhands','/assets/paperhands.png', { frameWidth:184,frameheight:184});
     }
 
     var platforms
