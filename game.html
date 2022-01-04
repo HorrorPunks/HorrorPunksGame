@@ -20,7 +20,7 @@
         physics: {
             default: 'arcade',
             arcade: {
-            gravity: { y: 1600 },
+            gravity: { y: 1800 },
             debug: false
       }
     },
@@ -290,11 +290,11 @@
             
         }
         //Jump
-        if ((keyW.isDown || cursors.up.isDown || keySpace.isDown) && player.body.touching.down)
+        if (((Phaser.Input.Keyboard.JustDown(keyW)) || (Phaser.Input.Keyboard.JustDown(cursors.up)) || (Phaser.Input.Keyboard.JustDown(keySpace))) && player.body.touching.down)
         {
             player.setVelocityY(-750);
         } 
-        if(this.input.keyboard.checkDown(keyE, 800)||this.input.keyboard.checkDown(keyQ, 800)||this.input.keyboard.checkDown(keyC, 800)){
+        if(Phaser.Input.Keyboard.JustDown(keyE, 800)||Phaser.Input.Keyboard.JustDown(keyQ, 800)||Phaser.Input.Keyboard.JustDown(keyC, 800)){
             if (canAttack){
                 canAttack = 0
                 animsEnabled = 0
